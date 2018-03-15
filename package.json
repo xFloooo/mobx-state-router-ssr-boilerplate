@@ -9,7 +9,8 @@
     "server": "node --harmony server.js",
     "devv": "export NODE_ENnpmV=development && node development-server",
     "dev": "webpack-dev-server --config ./webpack.dev.config.js --mode development --hot --history-api-fallback --open --host 0.0.0.0",
-    "build": "webpack --config ./webpack.prod.config.js --progress --profile --colors"
+    "prebuild": "rimraf public",
+    "build": "webpack --config ./webpack.prod.config.js --mode production --progress --profile --colors"
   },
   "author": "xFloooo",
   "license": "",
