@@ -7,7 +7,7 @@ import { HistoryAdapter } from 'mobx-state-router';
 
 window.main = () => {
     const history = createBrowserHistory();
-    const rootStore = new RootStore();
+    const rootStore = new RootStore(window.__MOBX_INITIAL_STATE__);
     const historyAdapter = new HistoryAdapter(rootStore.routerStore, history);
     historyAdapter.observeRouterStateChanges();
     ReactDOM.hydrate(

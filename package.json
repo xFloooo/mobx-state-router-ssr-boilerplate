@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run server",
     "server": "node --harmony server.js",
-    "devv": "export NODE_ENnpmV=development && node development-server",
     "dev": "webpack-dev-server --config ./webpack.dev.config.js --mode development --hot --history-api-fallback --open --host 0.0.0.0",
     "prebuild": "rimraf public",
-    "build": "webpack --config ./webpack.prod.config.js --mode production --progress --profile --colors"
+    "build:prod": "npm run prebuild && webpack --config ./webpack.prod.config.js --mode production --progress --profile --colors",
+    "build:dev": "npm run prebuild && webpack --config ./webpack.prod.config.js --mode development --progress --profile --colors"
   },
   "author": "xFloooo",
   "license": "",

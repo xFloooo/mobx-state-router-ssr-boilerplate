@@ -39,18 +39,26 @@ var RouterState = /** @class */ (function () {
 }());
 exports.RouterState = RouterState;
 var INITIAL_ROUTE_NAME = '__initial__';
+var INITIAL_ROUTE_PATTERN = '';
 /**
  * Holds the router state. It allows transitioning between states using
  * the `goTo()` method.
  */
 var RouterStore = /** @class */ (function () {
-    function RouterStore(rootStore, routes, notFoundState) {
+    function RouterStore(rootStore, routes, notFoundState, initialState) {
         this.rootStore = rootStore;
         this.routes = routes;
         this.notFoundState = notFoundState;
+        // if not initial state, set default
+        if (!initialState) {
+            initialState = {
+                name: INITIAL_ROUTE_NAME,
+                pattern: INITIAL_ROUTE_PATTERN
+            };
+        }
         // Set initial state to an internal initial state
-        this.routes.push({ name: INITIAL_ROUTE_NAME, pattern: '' });
-        this.routerState = new RouterState(INITIAL_ROUTE_NAME);
+        this.routes.push(initialState);
+        this.routerState = new RouterState(initialState.name);
     }
     RouterStore.prototype.goTo = function (toStateOrRouteName, params, queryParams) {
         if (params === void 0) { params = {}; }
@@ -70,6 +78,13 @@ var RouterStore = /** @class */ (function () {
             throw new Error("Route " + routeName + " does not exist");
         }
         return route;
+    };
+    RouterStore.prototype.extractState = function () {
+        var route = this.getRoute(this.routerState.routeName);
+        return {
+            name: route.name,
+            pattern: route.pattern,
+        };
     };
     /**
      * Requests a transition from fromState to toState. Note that the
@@ -111,7 +126,6 @@ var RouterStore = /** @class */ (function () {
             return toState;
         })
             .catch(function (redirectState) {
-                console.log('1111', redirectState)
             if (redirectState instanceof RouterState === false) {
                 throw new Error('toState is undefined');
             }

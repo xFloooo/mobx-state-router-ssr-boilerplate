@@ -14,7 +14,6 @@ var StaticAdapter = /** @class */ (function () {
         this.fullLocation = location;
         this.location = parsedUrl.url;
         this.search = query_string_1.extract(location);
-        this.search = '';
     }
     StaticAdapter.prototype.preload = function () {
         if (process.env.NODE_ENV === 'development') {

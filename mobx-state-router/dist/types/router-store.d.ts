@@ -45,6 +45,10 @@ export interface Route {
     onExit?: TransitionHook;
     onEnter?: TransitionHook;
 }
+export interface InitialState {
+    name: string;
+    pattern: string;
+}
 /**
  * Holds the router state. It allows transitioning between states using
  * the `goTo()` method.
@@ -54,7 +58,7 @@ export declare class RouterStore {
     routes: Route[];
     notFoundState: RouterState;
     routerState: RouterState;
-    constructor(rootStore: any, routes: Route[], notFoundState: RouterState);
+    constructor(rootStore: any, routes: Route[], notFoundState: RouterState, initialState?: InitialState);
     /**
      * Requests a transition to a new state. Note that the actual transition
      * may be different from the requested one based on enter and exit hooks.
@@ -63,6 +67,7 @@ export declare class RouterStore {
     goTo(routeName: string, params?: StringMap, queryParams?: Object): Promise<RouterState>;
     goToNotFound(): void;
     getRoute(routeName: string): Route;
+    extractState(): InitialState;
     /**
      * Requests a transition from fromState to toState. Note that the
      * actual transition may be different from the requested one

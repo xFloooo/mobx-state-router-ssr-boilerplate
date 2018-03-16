@@ -9,28 +9,35 @@ export const App = {
         const rootStore = new RootStore();
         const staticAdapter = new StaticAdapter(rootStore.routerStore, location);
         await staticAdapter.preload();
-        const htmlNew = (
+        const html = (
             <Html
                 content={ReactDOMServer.renderToString(<ServerApp rootStore={rootStore}/>)}
+                initialState={rootStore.extractInitialState()}
             />
         );
 
         return {
-            html: htmlNew,
-            newHtml: `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(
-                htmlNew
+            html: `<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(
+                html
             )}`
         };
     }
 };
 
-function Html({ content}) {
+function Html({ content, initialState}) {
     return (
         <html>
         <head>
         </head>
         <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
+        <script
+            dangerouslySetInnerHTML={{
+                __html: `window.__MOBX_INITIAL_STATE__=${JSON.stringify(
+                    initialState
+                )};`
+            }}
+        />
         <script src="/app.js" />
         <script>window.main();</script>
         </body>

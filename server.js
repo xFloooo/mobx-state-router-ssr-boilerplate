@@ -10,7 +10,7 @@ app.get('/favicon.ico', function(req, res) {
 
 app.get('*', async function(req, res) {
     const html = await App.App.getHTML(req.url);
-    res.send(html.newHtml);
+    res.send(html.html);
 })
 
 
