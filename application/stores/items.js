@@ -14,12 +14,17 @@ export class ItemsStore {
     loadItems(){
         //emulate async load
         return new Promise(resolve => {
-            setTimeout(() => {
-                runInAction(() => {
-                    this.items.replace(['item-1', 'item-2', 'item-3']);
-                    resolve();
-                });
-            }, 500);
+            if (!this.items.length) {
+                setTimeout(() => {
+                    runInAction(() => {
+                        this.items.replace(['item-1', 'item-2', 'item-3']);
+                        resolve();
+                    });
+                }, 500);
+            }
+            else{
+                resolve();
+            }
         });
     }
 
