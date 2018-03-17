@@ -8,7 +8,7 @@ export const App = {
     getHTML: async(location) => {
         const rootStore = new RootStore();
         const staticAdapter = new StaticAdapter(rootStore.routerStore, location);
-        await staticAdapter.preload();
+        await staticAdapter.preloadReady();
         const html = (
             <Html
                 content={ReactDOMServer.renderToString(<ServerApp rootStore={rootStore}/>)}

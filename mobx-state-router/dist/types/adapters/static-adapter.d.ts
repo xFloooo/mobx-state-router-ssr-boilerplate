@@ -8,7 +8,8 @@ export declare class StaticAdapter {
     fullLocation: string;
     location: string;
     search: string;
+    readyLoad: Promise<any>;
     constructor(routerStore: RouterStore, location: string);
-    preload(): Promise<any>;
+    preloadReady(): Promise<any>;
     goToLocation(location: string, search: string): Promise<any>;
 }

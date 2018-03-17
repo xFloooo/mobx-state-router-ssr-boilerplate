@@ -83,7 +83,7 @@ var RouterStore = /** @class */ (function () {
         var route = this.getRoute(this.routerState.routeName);
         return {
             name: route.name,
-            pattern: route.pattern,
+            pattern: route.pattern
         };
     };
     /**

@@ -14,12 +14,13 @@ var StaticAdapter = /** @class */ (function () {
         this.fullLocation = location;
         this.location = parsedUrl.url;
         this.search = query_string_1.extract(location);
+        this.readyLoad = this.goToLocation(this.location, this.search);
     }
-    StaticAdapter.prototype.preload = function () {
+    StaticAdapter.prototype.preloadReady = function () {
         if (process.env.NODE_ENV === 'development') {
-            console.log("StaticAdapter.preload(" + JSON.stringify("" + this.fullLocation) + ")");
+            console.log("StaticAdapter.preloadReady()");
         }
-        return Promise.resolve(this.goToLocation(this.location, this.search));
+        return Promise.resolve(this.readyLoad);
     };
     StaticAdapter.prototype.goToLocation = function (location, search) {
         if (process.env.NODE_ENV === 'development') {
