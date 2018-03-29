@@ -11,7 +11,7 @@ var StaticAdapter = /** @class */ (function () {
         var _this = this;
         this.goToLocation = function (location) {
             if (process.env.NODE_ENV === 'development') {
-                console.log("HistoryAdapter.goToLocation(" + JSON.stringify(location) + ")");
+                console.log("StaticAdapter.goToLocation(" + JSON.stringify(location) + ")");
             }
             // Find the matching route
             var routes = _this.routerStore.routes;
