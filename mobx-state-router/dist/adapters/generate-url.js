@@ -31,4 +31,15 @@ exports.generateUrl = function (pattern, params, queryParams) {
     }
     return url;
 };
+/**
+ * Converts the supplied routerState to a URL
+ * @param {RouterStore} routerStore
+ * @param {RouterState} routerState
+ * @returns {string}
+ */
+exports.routerStateToUrl = function (routerStore, routerState) {
+    var routeName = routerState.routeName, params = routerState.params, queryParams = routerState.queryParams;
+    var route = routerStore.getRoute(routeName);
+    return exports.generateUrl(route.pattern, params, queryParams);
+};
 //# sourceMappingURL=generate-url.js.map

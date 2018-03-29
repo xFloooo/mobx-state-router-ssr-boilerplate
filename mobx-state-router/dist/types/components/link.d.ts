@@ -11,5 +11,5 @@ export interface LinkProps {
  */
 export declare class Link extends React.Component<LinkProps, {}> {
     render(): JSX.Element;
-    handleClick: (event: React.MouseEvent<HTMLElement>) => void;
+    handleClick: (event: React.MouseEvent<HTMLElement>) => Promise<RouterState> | undefined;
 }

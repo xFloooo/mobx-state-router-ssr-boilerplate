@@ -1,15 +1,9 @@
-import { RouterStore } from '../router-store';
+import { RouterState, RouterStore } from '../router-store';
 /**
- * Adapter for static routes
- *
+ * Responsible for keeping the `RouterState` without sync with the Browser bar.
  */
 export declare class StaticAdapter {
     routerStore: RouterStore;
-    fullLocation: string;
-    location: string;
-    search: string;
-    readyLoad: Promise<any>;
-    constructor(routerStore: RouterStore, location: string);
-    preloadReady(): Promise<any>;
-    goToLocation(location: string, search: string): Promise<any>;
+    constructor(routerStore: RouterStore);
+    goToLocation: (location: Location) => Promise<RouterState>;
 }

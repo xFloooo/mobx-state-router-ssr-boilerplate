@@ -16,19 +16,23 @@ var HistoryAdapter = /** @class */ (function () {
             if (process.env.NODE_ENV === 'development') {
                 console.log("HistoryAdapter.goToLocation(" + JSON.stringify(location) + ")");
             }
+            // Find the matching route
             var routes = _this.routerStore.routes;
-            var routeFound = false;
+            var matchingRoute = null;
+            var params = undefined;
             for (var i = 0; i < routes.length; i++) {
                 var route = routes[i];
-                var params = match_url_1.matchUrl(location.pathname, route.pattern);
+                params = match_url_1.matchUrl(location.pathname, route.pattern);
                 if (params) {
-                    _this.routerStore.goTo(new router_store_1.RouterState(route.name, params, query_string_1.parse(location.search)));
-                    routeFound = true;
+                    matchingRoute = route;
                     break;
                 }
             }
-            if (!routeFound) {
-                _this.routerStore.goToNotFound();
+            if (matchingRoute) {
+                return _this.routerStore.goTo(new router_store_1.RouterState(matchingRoute.name, params, query_string_1.parse(location.search)));
+            }
+            else {
+                return _this.routerStore.goToNotFound();
             }
         };
         this.goBack = function () {
@@ -38,7 +42,7 @@ var HistoryAdapter = /** @class */ (function () {
             mobx_1.reaction(function () { return _this.routerStore.routerState; }, function (routerState) {
                 var location = _this.history.location;
                 var currentUrl = "" + location.pathname + location.search;
-                var routerStateUrl = exports.routerStateToUrl(_this.routerStore, routerState);
+                var routerStateUrl = generate_url_1.routerStateToUrl(_this.routerStore, routerState);
                 if (currentUrl !== routerStateUrl) {
                     _this.history.push(routerStateUrl);
                     if (process.env.NODE_ENV === 'development') {
@@ -49,6 +53,8 @@ var HistoryAdapter = /** @class */ (function () {
         };
         this.routerStore = routerStore;
         this.history = history;
+        // Go to current history location
+        // tslint:disable-next-line:no-floating-promises
         this.goToLocation(this.history.location);
         // Listen for history changes
         this.history.listen(function (location) { return _this.goToLocation(location); });
@@ -56,9 +62,4 @@ var HistoryAdapter = /** @class */ (function () {
     return HistoryAdapter;
 }());
 exports.HistoryAdapter = HistoryAdapter;
-exports.routerStateToUrl = function (routerStore, routerState) {
-    var routeName = routerState.routeName, params = routerState.params, queryParams = routerState.queryParams;
-    var route = routerStore.getRoute(routeName);
-    return generate_url_1.generateUrl(route.pattern, params, queryParams);
-};
 //# sourceMappingURL=history-adapter.js.map

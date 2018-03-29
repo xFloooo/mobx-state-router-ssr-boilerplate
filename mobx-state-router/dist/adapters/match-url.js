@@ -23,8 +23,9 @@ exports.matchUrl = function (url, pattern) {
     var _a = getPatternInfo(pattern), regExp = _a.regExp, keys = _a.keys;
     var match = regExp.exec(url);
     if (!match) {
-        return null;
+        return undefined;
     }
+    // tslint:disable-next-line:no-unused-variable
     var matchedUrl = match[0], values = match.slice(1);
     return keys.reduce(function (params, key, index) {
         params[key.name] = values[index];

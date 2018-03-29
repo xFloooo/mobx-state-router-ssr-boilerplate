@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var history_adapter_1 = require("../adapters/history-adapter");
+var generate_url_1 = require("../adapters/generate-url");
 function isLeftClickEvent(event) {
     return event.button === 0;
 }
@@ -28,19 +28,20 @@ var Link = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.handleClick = function (event) {
             // Ignore if link is clicked using a modifier key or not left-clicked
-            if (isModifiedEvent(event) || !isLeftClickEvent(event))
-                return;
+            if (isModifiedEvent(event) || !isLeftClickEvent(event)) {
+                return undefined;
+            }
             // Prevent default action which reloads the app
             event.preventDefault();
             // Change the router state to trigger a refresh
             var _a = _this.props, routerStore = _a.routerStore, toState = _a.toState;
-            routerStore.goTo(toState);
+            return routerStore.goTo(toState);
         };
         return _this;
     }
     Link.prototype.render = function () {
         var _a = this.props, routerStore = _a.routerStore, toState = _a.toState, children = _a.children;
-        return (React.createElement("a", { href: history_adapter_1.routerStateToUrl(routerStore, toState), onClick: this.handleClick }, children));
+        return (React.createElement("a", { href: generate_url_1.routerStateToUrl(routerStore, toState), onClick: this.handleClick }, children));
     };
     return Link;
 }(React.Component));

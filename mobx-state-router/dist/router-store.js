@@ -45,20 +45,20 @@ var INITIAL_ROUTE_PATTERN = '';
  * the `goTo()` method.
  */
 var RouterStore = /** @class */ (function () {
-    function RouterStore(rootStore, routes, notFoundState, initialState) {
+    function RouterStore(rootStore, routes, notFoundState, initialRoute) {
         this.rootStore = rootStore;
         this.routes = routes;
         this.notFoundState = notFoundState;
         // if not initial state, set default
-        if (!initialState) {
-            initialState = {
+        if (!initialRoute) {
+            initialRoute = {
                 name: INITIAL_ROUTE_NAME,
                 pattern: INITIAL_ROUTE_PATTERN
             };
         }
         // Set initial state to an internal initial state
-        this.routes.push(initialState);
-        this.routerState = new RouterState(initialState.name);
+        this.routes.push(initialRoute);
+        this.routerState = new RouterState(initialRoute.name);
     }
     RouterStore.prototype.goTo = function (toStateOrRouteName, params, queryParams) {
         if (params === void 0) { params = {}; }
@@ -71,6 +71,7 @@ var RouterStore = /** @class */ (function () {
     };
     RouterStore.prototype.goToNotFound = function () {
         this.setRouterState(this.notFoundState);
+        return Promise.resolve(this.notFoundState);
     };
     RouterStore.prototype.getRoute = function (routeName) {
         var route = _.find(this.routes, { name: routeName });
@@ -79,12 +80,8 @@ var RouterStore = /** @class */ (function () {
         }
         return route;
     };
-    RouterStore.prototype.extractState = function () {
-        var route = this.getRoute(this.routerState.routeName);
-        return {
-            name: route.name,
-            pattern: route.pattern
-        };
+    RouterStore.prototype.getCurrentRoute = function () {
+        return this.getRoute(this.routerState.routeName);
     };
     /**
      * Requests a transition from fromState to toState. Note that the
@@ -121,10 +118,12 @@ var RouterStore = /** @class */ (function () {
                 ? promise.then(function () { return hook(fromState, toState, _this); })
                 : promise;
         }, Promise.resolve())
+            // Handle successful resolution from the promise chain
             .then(function () {
             _this.setRouterState(toState);
             return toState;
         })
+            // Handle rejection from the promise chain
             .catch(function (redirectState) {
             if (redirectState instanceof RouterState === false) {
                 throw new Error('toState is undefined');

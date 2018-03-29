@@ -3,12 +3,13 @@ import ReactDOMServer from "react-dom/server";
 import ServerApp from './app';
 import { StaticAdapter } from 'mobx-state-router';
 import  {RootStore} from './stores/root.store'
+import {createLocation} from "history"
 
 export const App = {
     getHTML: async(location) => {
         const rootStore = new RootStore();
-        const staticAdapter = new StaticAdapter(rootStore.routerStore, location);
-        await staticAdapter.preloadReady();
+        const staticAdapter = new StaticAdapter(rootStore.routerStore);
+        await staticAdapter.goToLocation(createLocation(location));
         const html = (
             <Html
                 content={ReactDOMServer.renderToString(<ServerApp rootStore={rootStore}/>)}

@@ -27,7 +27,7 @@ export class RootStore {
     extractInitialState(){
         return{
             itemsStore: this.itemsStore.extractState(),
-            routerStore: this.routerStore.extractState()
+            routerStore: this.routerStore.getCurrentRoute()
         }
     }
 }
