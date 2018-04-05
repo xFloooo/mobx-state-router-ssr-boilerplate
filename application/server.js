@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import ServerApp from './app';
+import {JssProvider, SheetsRegistry} from 'react-jss'
 import { StaticAdapter } from 'mobx-state-router';
 import  {RootStore} from './stores/root.store'
 import {createLocation} from "history"
@@ -10,10 +11,17 @@ export const App = {
         const rootStore = new RootStore();
         const staticAdapter = new StaticAdapter(rootStore.routerStore);
         await staticAdapter.goToLocation(createLocation(location));
+        const sheets = new SheetsRegistry();
+        const reactContent = ReactDOMServer.renderToString(
+            <JssProvider registry={sheets}>
+                <ServerApp rootStore={rootStore}/>
+            </JssProvider>
+        )
         const html = (
             <Html
-                content={ReactDOMServer.renderToString(<ServerApp rootStore={rootStore}/>)}
+                content={reactContent}
                 initialState={rootStore.extractInitialState()}
+                sheets={sheets}
             />
         );
 
@@ -25,10 +33,13 @@ export const App = {
     }
 };
 
-function Html({ content, initialState}) {
+function Html({ content, initialState, sheets}) {
     return (
         <html>
         <head>
+            <style type="text/css">
+                {sheets.toString()}
+            </style>
         </head>
         <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />

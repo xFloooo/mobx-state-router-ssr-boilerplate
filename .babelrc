@@ -1,15 +1,17 @@
 {
   "presets": [
+    "react",
     ["env", {
       "targets": {
         "browsers": ["last 2 versions", "safari >= 7"]
       }
-    }],
-    "react"
+    }]
   ],
   "plugins": [
+    "transform-object-rest-spread",
     "transform-decorators-legacy",
     "transform-class-properties",
+    "transform-es3-property-literals",
     "react-hot-loader/babel"
   ]
 }

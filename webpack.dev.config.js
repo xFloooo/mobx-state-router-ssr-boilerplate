@@ -44,7 +44,8 @@ module.exports = {
                     // It enables caching results in ./node_modules/.cache/babel-loader/
                     // directory for faster rebuilds.
                     cacheDirectory: true,
-                    plugins: ['react-hot-loader/babel'],
+                    // plugins: ['transform-decorators-legacy', 'transform-class-properties', 'react-hot-loader/babel'],
+                    // presets: ['env', 'react']
                 },
             }
         ]

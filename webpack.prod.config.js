@@ -51,8 +51,10 @@ var base = {
                         "react"
                     ],
                     plugins: [
+                        "transform-object-rest-spread",
                         "transform-decorators-legacy",
-                        "transform-class-properties"
+                        "transform-class-properties",
+                        "transform-es3-property-literals"
                     ]
                 }
             }

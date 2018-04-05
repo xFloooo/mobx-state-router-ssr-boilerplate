@@ -1,16 +1,33 @@
 import React from 'react';
 import {Link, RouterState } from 'mobx-state-router'
 import {inject, observer}from 'mobx-react'
+import injectSheet from 'react-jss'
+
+const styles = (theme) => ({
+    wrapper: {
+        background: theme.background,
+        textAlign: (props) => {
+            console.log('items -> Вот тут можно можно брать windowSizes и рассчитывать что надо', props)
+        }
+    },
+    title: {
+        color: theme.colorPrimary
+    },
+    listItem: {
+        color: theme.colorPrimary
+    }
+});
 
 @inject("rootStore")
+@injectSheet(styles)
 @observer
 export class Items extends React.Component{
     render(){
-        const {rootStore: {itemsStore, routerStore}} = this.props;
+        const {rootStore: {itemsStore, routerStore}, classes} = this.props;
         const toState = new RouterState('home');
         return(
-            <div>
-                <h1>Hello items page!</h1>
+            <div className={classes.wrapper}>
+                <h1 className={classes.title}>Hello items page!</h1>
                 <div>
                     <Link routerStore={routerStore} toState={toState}>
                         Go to Home page
@@ -19,7 +36,7 @@ export class Items extends React.Component{
                 <ul>
                     {
                         itemsStore.items.map((item, index) => {
-                            return <li key={index}>{item}</li>
+                            return <li key={index} className={classes.listItem}>{item}</li>
                         })
                     }
                 </ul>

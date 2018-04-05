@@ -1,5 +1,6 @@
 import React from 'react';
-import { inject } from 'mobx-react';
+import {ThemeProvider} from 'react-jss'
+import { inject, observer } from 'mobx-react';
 import { RouterView } from 'mobx-state-router';
 import { Home } from './pages/home';
 import { Items } from './pages/items';
@@ -13,11 +14,14 @@ const viewMap = {
 };
 
 @inject('rootStore')
+@observer
 export class ShellBase extends React.Component {
     render() {
-        const { rootStore: { routerStore } } = this.props;
+        const {rootStore,  rootStore: { routerStore } } = this.props;
         return (
-            <RouterView routerStore={routerStore} viewMap={viewMap} />
+            <ThemeProvider theme={rootStore.theme}>
+                <RouterView routerStore={routerStore} viewMap={viewMap} />
+            </ThemeProvider>
         );
     }
 }
