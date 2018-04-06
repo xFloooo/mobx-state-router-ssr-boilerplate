@@ -16,12 +16,13 @@ export const App = {
             <JssProvider registry={sheets}>
                 <ServerApp rootStore={rootStore}/>
             </JssProvider>
-        )
+        );
+
         const html = (
             <Html
                 content={reactContent}
                 initialState={rootStore.extractInitialState()}
-                sheets={sheets}
+                sheets={sheets.toString()}
             />
         );
 
@@ -38,7 +39,7 @@ function Html({ content, initialState, sheets}) {
         <html>
         <head>
             <style type="text/css">
-                {sheets.toString()}
+                {sheets}
             </style>
         </head>
         <body>
