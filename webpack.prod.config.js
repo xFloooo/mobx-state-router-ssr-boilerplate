@@ -13,11 +13,11 @@ var base = {
         tls: 'empty',
         child_process: 'empty',
     },
-    resolve: {
-        alias: {
-            "mobx-state-router": path.resolve(__dirname, "mobx-state-router/dist")
-        }
-    },
+    // resolve: {
+    //     alias: {
+    //         "mobx-state-router": path.resolve(__dirname, "mobx-state-router/dist")
+    //     }
+    // },
     // entry: {
     //     app: ["babel-polyfill", "./application/client.js"]
     // },

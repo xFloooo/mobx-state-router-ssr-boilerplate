@@ -6,11 +6,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     devtool: "source-map",
-    resolve: {
-        alias: {
-            "mobx-state-router": path.resolve(__dirname, "mobx-state-router/dist")
-        }
-    },
+    // resolve: {
+    //     alias: {
+    //         "mobx-state-router": path.resolve(__dirname, "mobx-state-router/dist")
+    //     }
+    // },
     entry: {
         app: [
             "./application/index.js"

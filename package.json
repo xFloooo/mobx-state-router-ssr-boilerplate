@@ -20,7 +20,7 @@
     "jss-vendor-prefixer": "^8.0.0",
     "mobx": "^4.1.0",
     "mobx-react": "^5.0.0",
-    "mobx-state-router": "^2.0.0",
+    "mobx-state-router": "^3.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-jss": "^8.4.0"

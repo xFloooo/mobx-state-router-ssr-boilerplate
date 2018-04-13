@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link, RouterState } from 'mobx-state-router'
+import { RouterLink } from 'mobx-state-router'
 import {inject} from 'mobx-react'
 import injectSheet from 'react-jss'
 
@@ -19,6 +19,12 @@ const styles = (theme) => ({
     title: {
         color: theme.colorPrimary,
         "text-size-adjust": "10%"
+    },
+    link: {
+        "color": "black",
+        "&:visited": {
+            "color": "green",
+        }
     }
 });
 
@@ -27,15 +33,14 @@ const styles = (theme) => ({
 export class Home extends React.Component{
     render(){
         let {classes} = this.props;
-        const toState = new RouterState('items');
         const {rootStore, rootStore: { routerStore }} = this.props;
         return (
             <div className={classes.wrapper}>
                 <div><button onClick={() => rootStore.toggleTheme()}>toggle theme</button></div>
                 <h1 className={classes.title}>Hello Home page!</h1>
-                <Link routerStore={routerStore} toState={toState}>
+                <RouterLink className={classes.link} routeName="items">
                     Go to Items page
-                </Link>
+                </RouterLink>
             </div>
         )
     }

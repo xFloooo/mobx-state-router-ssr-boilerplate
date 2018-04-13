@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, RouterState } from 'mobx-state-router'
+import {RouterLink } from 'mobx-state-router'
 import {inject, observer}from 'mobx-react'
 import injectSheet from 'react-jss'
 
@@ -24,14 +24,13 @@ const styles = (theme) => ({
 export class Items extends React.Component{
     render(){
         const {rootStore: {itemsStore, routerStore}, classes} = this.props;
-        const toState = new RouterState('home');
         return(
             <div className={classes.wrapper}>
                 <h1 className={classes.title}>Hello items page!</h1>
                 <div>
-                    <Link routerStore={routerStore} toState={toState}>
-                        Go to Home page
-                    </Link>
+                    <RouterLink routeName="home">
+                        Go to Items page
+                    </RouterLink>
                 </div>
                 <ul>
                     {
